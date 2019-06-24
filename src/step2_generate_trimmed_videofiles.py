@@ -29,56 +29,6 @@ def getClassNames(_path_to_dataset):
     AllCrimeDict = {val+1:key for val,key in enumerate(AllCrimeList)}
     return AllCrimeDict    
 
-# num_of_act_frame = (act_end_frame-act_start_frame)+5
-# VidCap = cv2.VideoCapture(path_to_video_file)
-# VidCap.set(cv2.CAP_PROP_POS_FRAMES,act_start_frame-1)
-# video_frame_height = VidCap.get(cv2.CAP_PROP_FRAME_HEIGHT)
-# video_frame_width = VidCap.get(cv2.CAP_PROP_FRAME_WIDTH)
-# video_file_name = path_to_video_file.split('/')[-1]
-
-# # #Create object to write test Video
-# fourcc = cv2.VideoWriter_fourcc(*'MP4V')
-# OutVideo = cv2.VideoWriter(video_file_name,fourcc,20,(int(video_frame_width),int(video_frame_height)))
-
-
-# for frame_num in range(num_of_act_frame):
-#     _,frame = VidCap.read()
-#     OutVideo.write(frame)
-#     cv2.imshow("Video",frame)
-#     cv2.waitKey(1)
-    
-# VidCap.release()
-# OutVideo.release()
-# print('Done!! Writing Video')
-# cv2.destroyAllWindows()
-
-def generateTrimmedVideo(path_input_video_file,act_start_frame,act_end_frame,path_output_video_file):
-    num_of_act_frame = (act_end_frame-act_start_frame)+5
-    # Create Vidoe Capture object to read video
-    VidCap = cv2.VideoCapture(path_input_video_file)
-    # Get Video Properties
-    VidCap.set(cv2.CAP_PROP_POS_FRAMES,act_start_frame-1)
-    video_frame_height = VidCap.get(cv2.CAP_PROP_FRAME_HEIGHT)
-    video_frame_width = VidCap.get(cv2.CAP_PROP_FRAME_WIDTH)
-    # Get Video Name
-    video_file_name = path_input_video_file.split('/')[-1]
-    # Create object to generate output Video
-    fourcc = cv2.VideoWriter_fourcc(*'MP4V')
-    OutVideo = cv2.VideoWriter(video_file_name,fourcc,20,(int(video_frame_width),int(video_frame_height)))
-
-    for _ in range(num_of_act_frame):
-        _,frame = VidCap.read()
-        OutVideo.write(frame)
-        # cv2.imshow("Video",frame)
-        # cv2.waitKey(1)    
-    VidCap.release()
-    OutVideo.release()
-
-    os.rename(path_input_video_file,path_output_video_file)
-    print('Done!! Writing Video')
-    # cv2.destroyAllWindows()
-    return
-
 def generateTrimmedVideo_v2(anno_df,data_for='test',class_id = None):
     if class_id:
     # for class_id in anno_df.classid.unique():
