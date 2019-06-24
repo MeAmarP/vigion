@@ -26,3 +26,14 @@ Fighting.
 _Considering the fact that, Security and Surveillance systems are integral part of commercial
 and residential establishments. VIGION can play important role of maintaining public safety in
 such area_.
+
+## Overview:
+Computer Vision and AI has a power to make these traditional Surveillance systems situational
+aware to help them detect and classify between normal and suspicious activity.
+This will help improve public safety and assist law enforcement agencies to respond quickly,
+to stop any escalation in critical situation.
+
+_VIGION will be trained to classify between normal and criminal activity. This
+trained model will be used to detect the activity on a live feed. Upon detection of the
+activity, VIGION will inform security operator about the incident with location and probable
+type of activity._
