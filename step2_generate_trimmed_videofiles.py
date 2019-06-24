@@ -79,6 +79,77 @@ def generateTrimmedVideo(path_input_video_file,act_start_frame,act_end_frame,pat
     # cv2.destroyAllWindows()
     return
 
+def generateTrimmedVideo_v2(anno_df,data_for='test',class_id = None):
+    if class_id:
+    # for class_id in anno_df.classid.unique():
+        no_of_files_in_class = df[df.classid==class_id].path.size
+        no_of_train_files = int(no_of_files_in_class * _TRAIN_SPLIT_VAL)
+        #get path to the train/test files
+        if data_for == 'train':
+            video_paths = df[df.classid==class_id].path[:no_of_train_files]
+        elif data_for == 'test':
+            video_paths = df[df.classid==class_id].path[no_of_train_files:]
+        
+        for index in video_paths.index:
+            path_input_video_file = df.at[index,'path']
+            act_start1 = df.at[index,'act_start1']
+            act_end1 = df.at[index,'act_end1']
+            act_start2 = df.at[index,'act_start2']
+            act_end2 = df.at[index,'act_end2']            
+            # print(video_file_name)
+            print(path_input_video_file)
+            VidCap = cv2.VideoCapture(path_input_video_file)
+            if (VidCap.isOpened() == False):
+                print('Err!!! Can\'t Open Video File')
+            elif (VidCap.isOpened() == True): 
+                video_frame_height = VidCap.get(cv2.CAP_PROP_FRAME_HEIGHT)
+                video_frame_width = VidCap.get(cv2.CAP_PROP_FRAME_WIDTH)
+                if (act_start1 != -1) and (act_end1 != -1):
+                    # Set Video Start Position Frame No.
+                    VidCap.set(cv2.CAP_PROP_POS_FRAMES,act_start1-1)
+                    diff1 = (act_end1 - act_start1)                   
+                    # Get Video Name
+                    video_file_name = 'trimmed1_'+path_input_video_file.split('\\')[-1]
+                    print(video_file_name)
+                    fourcc = cv2.VideoWriter_fourcc(*'MP4V')
+                    OutVideo1 = cv2.VideoWriter(video_file_name,fourcc,40,(int(video_frame_width),int(video_frame_height)))
+                    # Create object to generate output Video
+                    for _ in range(diff1):
+                        _,frame = VidCap.read()
+                        OutVideo1.write(frame)
+                    OutVideo1.release()
+                    VidCap.release()
+                    #===========================================================
+                    lilpath = os.path.join(os.getcwd(),'dataset',data_for,CrimeTypeDict[class_id])
+                    #print(lilpath)
+                    if not os.path.isdir(lilpath):
+                        os.makedirs(lilpath)
+                    finPath = os.path.join(lilpath, video_file_name)
+                    #print(finPath)
+                    os.rename(os.path.abspath(video_file_name), finPath)
+                if (act_start2 != -1) and (act_end2 != -1):
+                    VidCap = cv2.VideoCapture(path_input_video_file)
+                    VidCap.set(cv2.CAP_PROP_POS_FRAMES,act_start2-1)
+                    diff2 = (act_end2 - act_start2)
+                    video_file_name = 'trimmed2_'+path_input_video_file.split('\\')[-1]
+                    fourcc = cv2.VideoWriter_fourcc(*'MP4V')
+                    OutVideo2 = cv2.VideoWriter(video_file_name,fourcc,40,(int(video_frame_width),int(video_frame_height)))
+                    for _ in range(diff2):
+                        _,frame = VidCap.read()
+                        OutVideo2.write(frame)
+                    OutVideo2.release()
+                    VidCap.release()            
+                    #===========================================================
+                    lilpath = os.path.join(os.getcwd(),'dataset',data_for,CrimeTypeDict[class_id])
+                    #print(lilpath)
+                    if not os.path.isdir(lilpath):
+                        os.makedirs(lilpath)
+                    finPath = os.path.join(os.path.abspath(lilpath), video_file_name)
+                    #print(finPath)
+                    os.rename(os.path.abspath(video_file_name), finPath)
+            print('Done.. Clipping Long Video!!')
+    return
+
 
 
 if __name__ == "__main__":
@@ -100,23 +171,25 @@ if __name__ == "__main__":
                                    'act_end2'])
     #Acess the path based on classid
     
-    for class_id in df.classid.unique():
-        no_of_files_in_class = df[df.classid==class_id].path.size
-        no_of_train_files = int(no_of_files_in_class * _TRAIN_SPLIT_VAL)
-        #get path to the train/test files
-        train_video_paths = df[df.classid==class_id].path[:no_of_train_files]
-        test_video_paths = df[df.classid==class_id].path[no_of_train_files:]             
-        """
-        #TODO:
-        * * Read the path >> Apply VideoClip func >> Move the file to respective directory
-        * * We have splited paths between Train and Test
-        * * Apply respective dataset VideClip function
-        * * Add function argument for explicit mention of 'train' or 'test'
-        * * Write a function to getClassName() based on ClassID
-        * * Create path using os.getcwd(), 'train/test' 'className'
-        * * Check if os.isDir() if not then os.mkdirs()
-        """        
-        lilpath = os.path.join(os.getcwd(),'dataset','train',CrimeTypeDict[class_id])
+    # for class_id in df.classid.unique():
+    #     no_of_files_in_class = df[df.classid==class_id].path.size
+    #     no_of_train_files = int(no_of_files_in_class * _TRAIN_SPLIT_VAL)
+    #     #get path to the train/test files
+    #     train_video_paths = df[df.classid==class_id].path[:no_of_train_files]
+    #     test_video_paths = df[df.classid==class_id].path[no_of_train_files:]
+    """
+    #TODO:
+    * * Read the path >> Apply VideoClip func >> Move the file to respective directory
+    * * We have splited paths between Train and Test
+    * * Apply respective dataset VideClip function
+    * * Add function argument for explicit mention of 'train' or 'test'
+    * * Write a function to getClassName() based on ClassID
+    * * Create path using os.getcwd(), 'train/test' 'className'
+    * * Check if os.isDir() if not then os.mkdirs()
+    """
+
+        # lilpath = os.path.join(os.getcwd(),'dataset','train',CrimeTypeDict[class_id])
+        # print(lilpath)
         # if os.path.isdir(lilpath):
         #     os.makedirs(lilpath)
     # generateTrimmedVideo(path_input_video_file,act_start_frame,act_end_frame,path_output_video_file)
