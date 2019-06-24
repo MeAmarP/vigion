@@ -119,14 +119,7 @@ if __name__ == "__main__":
                                    'act_end1',
                                    'act_start2',
                                    'act_end2'])
-    #Acess the path based on classid
     
-    # for class_id in df.classid.unique():
-    #     no_of_files_in_class = df[df.classid==class_id].path.size
-    #     no_of_train_files = int(no_of_files_in_class * _TRAIN_SPLIT_VAL)
-    #     #get path to the train/test files
-    #     train_video_paths = df[df.classid==class_id].path[:no_of_train_files]
-    #     test_video_paths = df[df.classid==class_id].path[no_of_train_files:]
     """
     #TODO:
     * * Read the path >> Apply VideoClip func >> Move the file to respective directory
@@ -138,10 +131,5 @@ if __name__ == "__main__":
     * * Check if os.isDir() if not then os.mkdirs()
     """
 
-        # lilpath = os.path.join(os.getcwd(),'dataset','train',CrimeTypeDict[class_id])
-        # print(lilpath)
-        # if os.path.isdir(lilpath):
-        #     os.makedirs(lilpath)
-    # generateTrimmedVideo(path_input_video_file,act_start_frame,act_end_frame,path_output_video_file)
 
     
