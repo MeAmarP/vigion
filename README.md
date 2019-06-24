@@ -1,4 +1,4 @@
-# Vigion [Vigilant Vision]: Real-Time Crime Activity detection
+# VIGION [Vigilant Vision]: Real-Time Crime Activity detection
 ## Problem Statement:
 Surveillance is one of the prime method used by governments and law enforcement agencies
 for prevention of the criminal or suspicious activities.
@@ -17,8 +17,12 @@ delay in response time to the incident. Which arises the critical question of pu
 ## Summary:
 Traditional Surveillance systems are passive and reactive. Which allow investigating the
 incident rather than preventing it.
-+ Vigion is edge intelligent device using Computer Vision and Deep Neural Network.
++ VIGION is edge intelligent device using Computer Vision and Deep Neural Network.
 + It can detect real time criminal activities like Abuse, Arrest, Assault, Burglary and
 Fighting.
-+ Vigion can alert (SMS/Email) user or law enforcement agency about the incident.
-+ Vigion is a portable and low cost device using Raspberry Pi or Jetson Nano as it's brain.
++ VIGION can alert (SMS/Email) user or law enforcement agency about the incident.
++ VIGION is a portable and low cost device using Raspberry Pi or Jetson Nano as it's brain.
+
+_Considering the fact that, Security and Surveillance systems are integral part of commercial
+and residential establishments. VIGION can play important role of maintaining public safety in
+such area_.
