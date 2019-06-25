@@ -12,6 +12,16 @@ Description:
     - trim the video as per the frame no for every action in the video
 
     - Move the video into test-train folders
+        """
+    #TODO:
+    * * Read the path >> Apply VideoClip func >> Move the file to respective directory
+    * * We have splited paths between Train and Test
+    * * Apply respective dataset VideClip function
+    * * Add function argument for explicit mention of 'train' or 'test'
+    * * Write a function to getClassName() based on ClassID
+    * * Create path using os.getcwd(), 'train/test' 'className'
+    * * Check if os.isDir() if not then os.mkdirs()
+    """
 
 Copyright (c) 2019 Your Company
 '''
@@ -78,7 +88,7 @@ def generateTrimmedVideo_v2(df,data_for='test',class_id = None):
                     OutVideo1.release()
                     VidCap.release()
                     #===========================================================
-                    lilpath = os.path.join(os.getcwd(),'dataset',data_for,CrimeTypeDict[class_id])
+                    lilpath = os.path.join(os.getcwd(),'vigion','dataset',data_for,CrimeTypeDict[class_id])
                     #print(lilpath)
                     if not os.path.isdir(lilpath):
                         os.makedirs(lilpath)
@@ -98,7 +108,7 @@ def generateTrimmedVideo_v2(df,data_for='test',class_id = None):
                     OutVideo2.release()
                     VidCap.release()            
                     #===========================================================
-                    lilpath = os.path.join(os.getcwd(),'dataset',data_for,CrimeTypeDict[class_id])
+                    lilpath = os.path.join(os.getcwd(),'vigion','dataset',data_for,CrimeTypeDict[class_id])
                     #print(lilpath)
                     if not os.path.isdir(lilpath):
                         os.makedirs(lilpath)
@@ -117,17 +127,16 @@ if __name__ == "__main__":
     data_dir_path = os.path.join(os.getcwd(),'vigion','dataset','anomaly')
     CrimeTypeDict = getClassNames(data_dir_path)
     dFrame = getDframe_AnnotedFile(path_final_annoted_file)
+
+    data_category = 'test'
+    for class_id in dFrame.classid.unique():        
+        generateTrimmedVideo_v2(dFrame,data_for=data_category,class_id=class_id)
+        print('Video processing Done for<< {0} | {1} >>class'.format(data_category,CrimeTypeDict[class_id]))
+
+
+
     
-    """
-    #TODO:
-    * * Read the path >> Apply VideoClip func >> Move the file to respective directory
-    * * We have splited paths between Train and Test
-    * * Apply respective dataset VideClip function
-    * * Add function argument for explicit mention of 'train' or 'test'
-    * * Write a function to getClassName() based on ClassID
-    * * Create path using os.getcwd(), 'train/test' 'className'
-    * * Check if os.isDir() if not then os.mkdirs()
-    """
+
 
 
     
