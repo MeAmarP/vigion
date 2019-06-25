@@ -107,7 +107,7 @@ if __name__ == "__main__":
     _TEST_SPLIT_VAL = 0.3
     _FILE_EXTENSION = '.mp4'
     final_annoted_file = 'F:/Dataset/Anomaly_Dataset/Anomaly_Videos/testcode/fin_video_trimtime.txt'
-    data_dir_path = os.path.join(os.getcwd(),'dataset','anomaly')
+    data_dir_path = os.path.join(os.getcwd(),'vigion','dataset','anomaly')
     CrimeTypeDict = getClassNames(data_dir_path)
 
     import pandas as pd
