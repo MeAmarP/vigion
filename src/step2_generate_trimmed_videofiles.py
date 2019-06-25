@@ -21,15 +21,23 @@ import os
 
 import pandas as pd
 
-def readAnnotedFile():
-    return
+def getDframe_AnnotedFile(path_final_annoted_file):
+    df = pd.read_csv(path_final_annoted_file,
+                        delimiter=' ',
+                        names=['path',
+                                'classid',
+                                'act_start1',
+                                'act_end1',
+                                'act_start2',
+                                'act_end2'])
+    return df
 
 def getClassNames(_path_to_dataset):
     AllCrimeList = os.listdir(_path_to_dataset)
     AllCrimeDict = {val+1:key for val,key in enumerate(AllCrimeList)}
     return AllCrimeDict    
 
-def generateTrimmedVideo_v2(anno_df,data_for='test',class_id = None):
+def generateTrimmedVideo_v2(df,data_for='test',class_id = None):
     if class_id:
     # for class_id in anno_df.classid.unique():
         no_of_files_in_class = df[df.classid==class_id].path.size
@@ -97,7 +105,6 @@ def generateTrimmedVideo_v2(anno_df,data_for='test',class_id = None):
                     finPath = os.path.join(os.path.abspath(lilpath), video_file_name)
                     #print(finPath)
                     os.rename(os.path.abspath(video_file_name), finPath)
-            print('Done.. Clipping Long Video!!')
     return
 
 
@@ -109,16 +116,7 @@ if __name__ == "__main__":
     path_final_annoted_file = 'F:\\Dataset\\Anomaly_Dataset\\Anomaly_Videos\\vigion\\v1_final_trimmed_anno_file.txt'
     data_dir_path = os.path.join(os.getcwd(),'vigion','dataset','anomaly')
     CrimeTypeDict = getClassNames(data_dir_path)
-
-    import pandas as pd
-    df = pd.read_csv(final_annoted_file,
-                            delimiter=' ',
-                            names=['path',
-                                   'classid',
-                                   'act_start1',
-                                   'act_end1',
-                                   'act_start2',
-                                   'act_end2'])
+    dFrame = getDframe_AnnotedFile(path_final_annoted_file)
     
     """
     #TODO:
