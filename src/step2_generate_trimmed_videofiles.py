@@ -54,7 +54,7 @@ def generateTrimmedVideo_v2(df,data_for='test',class_id = None):
         no_of_train_files = int(no_of_files_in_class * _TRAIN_SPLIT_VAL)
         #get path to the train/test files
         if data_for == 'train':
-            video_paths = df[df.classid==class_id].path[:no_of_train_files]
+            video_paths = df[df.classid==class_id].path[:no_of_train_files] 
         elif data_for == 'test':
             video_paths = df[df.classid==class_id].path[no_of_train_files:]
         
